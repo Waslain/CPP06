@@ -1,7 +1,7 @@
-NAME		= scalaire
+NAME		= convert
 
 # Files
-SRCS		= main.cpp Scalaire.cpp
+SRCS		= main.cpp ScalarConverter.cpp
 OBJS		:= $(SRCS:.cpp=.o)
 DEPS		:= $(OBJS:.o=.d)
 
