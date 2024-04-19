@@ -6,16 +6,13 @@
 /*   By: fduzant <fduzant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 15:07:13 by fduzant           #+#    #+#             */
-/*   Updated: 2024/04/09 12:16:59 by fduzant          ###   ########.fr       */
+/*   Updated: 2024/04/19 16:05:31 by fduzant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <iostream>
-#include <string>
 #include <cstdlib>
 #include <ctime>
-#include <exception>
-#include <typeinfo>
 #include "Base.hpp"
 
 //Randomly create an instance of A, B or C and return it as Base pointer.
@@ -60,21 +57,21 @@ void identify(Base &p)
 		std::cout << "A" << std::endl;
 		return ;
 	}
-	catch (std::bad_cast &bc) {}
+	catch (...) {}
 	try
 	{
 		B b = dynamic_cast<B&>(p);
 		std::cout << "B" << std::endl;
 		return ;
 	}
-	catch (std::bad_cast &bc) {}
+	catch (...) {}
 	try
 	{
 		C c = dynamic_cast<C&>(p);
 		std::cout << "C" << std::endl;
 		return ;
 	}
-	catch (std::bad_cast &bc) {}
+	catch (...) {}
 }
 
 //Main function	that will test the functions.
