@@ -132,7 +132,7 @@ void ScalarConverter::convertInt(int n)
 void ScalarConverter::convertFloat(float n)
 {
 	ScalarConverter::printChar(static_cast<char>(n), (n < 0.0f || n > 127.0f || std::isnan(n) || isinff(n)));
-	ScalarConverter::printInt(static_cast<int>(n), (std::isnan(n) || isinff(n)));
+	ScalarConverter::printInt(static_cast<int>(n), (std::isnan(n) || isinff(n) || (static_cast<double>(n) > INT_MAX || static_cast<double>(n) <= INT_MIN)));
 	ScalarConverter::printFloat(n, 0);
 	ScalarConverter::printDouble(static_cast<double>(n), 0);
 }
@@ -156,7 +156,7 @@ int ScalarConverter::whatType(const std::string &str)
 			return (ScalarConverter::CHAR);
 	}
 	
-	if (str.compare("-inff") == 0 || str.compare("+inff") == 0)
+	if (str.compare("-inff") == 0 || str.compare("+inff") == 0 || str.compare("nanf") == 0)
 		return (ScalarConverter::FLOAT);
 
 	if (str.compare("-inf") == 0 || str.compare("+inf") == 0 || str.compare("nan") == 0)
@@ -176,8 +176,11 @@ int ScalarConverter::whatType(const std::string &str)
 		}
 	}
 
+	char *end;
 	if (hasPoint)
 		return (ScalarConverter::DOUBLE);
+	else if (std::strtol(str.c_str(), &end, 10) > INT_MAX || std::strtol(str.c_str(), &end, 10) < INT_MIN)
+		return (ScalarConverter::FLOAT);
 	else
 		return (ScalarConverter::INT);
 }
